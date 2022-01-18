@@ -1,0 +1,6 @@
+# Configure selenium instances.
+browser:
+  name: "Firefox"
+  driver:
+    driver_name: "gecko"
+    path: "./gecko_driver/geckodriver"
