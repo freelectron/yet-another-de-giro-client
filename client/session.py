@@ -5,15 +5,9 @@ Uses a combination of packages:
  - Uses request (https://docs.python-requests.org/en/master/index.html)
  - Uses pandas
 Selenium is mainly used to login to DeGiro and receive appropriate cookies.
-Request is for performing specific actions e.g., historical data download, portfolio information.
-Uses pandas to output tabular/time-series data from DeGiro.
-
-TODO: Create translator
-TODO: Create pandera schemas
 """
 
-from io import StringIO
-from typing import Dict, Optional
+from typing import Dict, Optional, Mapping
 from time import sleep
 
 import pendulum
@@ -39,10 +33,6 @@ with open("./de_giro_client/configs/requests_config.yaml") as f:
 class DeGiroSession:
     domain_url: str = DE_GIRO_WEB_TRADER_DOMAIN_URL
     login_url: str = f"{domain_url}/login"
-    portfolio_url: str = f"{domain_url}/reporting/secure/v3/positionReport"
-    date_string_format: str = "%d/%m/%Y"
-    country: str = "NL"
-    language: str = "nl"
 
     def __init__(
         self,
@@ -101,42 +91,3 @@ class DeGiroSession:
             for cookie in self.browser_session.get_cookies()
             if cookie.get("name") == "JSESSIONID"
         ].pop()
-
-    def _get_portfolio_performance_results_daily(self, date: Date) -> pd.DataFrame:
-        """
-        Get portfolio returns in % and monetary units for a single day.
-        """
-        date_str = date.strftime(self.date_string_format)
-        query_url = (
-            f"{self.portfolio_url}/csv?"
-            f"intAccount={self.account_id}"
-            f"&sessionId={self.session_id}"
-            f"&country={self.country}"
-            f"&lang={self.language}"
-            f"&toDate={date_str}"
-        )
-        response = self.requests_session.get(query_url)
-        df = pd.read_csv(StringIO(str(response.content.decode("utf-8"))), decimal=",")
-        df.index = pd.to_datetime([date.to_date_string()] * len(df))
-
-        # Manually parse a column that has string & float in it
-        df["Lokale valuta"] = df["Lokale waarde"].apply(lambda x: x.split()[0])
-        df["Lokale waarde"] = (
-            df["Lokale waarde"].apply(lambda x: x.split()[1]).astype(float)
-        )
-
-        return df
-
-    def get_portfolio_performance_results(
-        self, period: pendulum.Period
-    ) -> pd.DataFrame:
-        """
-        Fetch portfolio results information for a period and assemble it in one table.
-        """
-        df_results = pd.DataFrame()
-        for date in period.range("days"):
-            df_results = df_results.append(
-                self._get_portfolio_performance_results_daily(date)
-            )
-
-        return df_results
