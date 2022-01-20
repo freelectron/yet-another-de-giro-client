@@ -4,11 +4,10 @@ from typing import Dict
 
 import pandas as pd
 from pendulum import Period, Date
-from pandera import DataFrameSchema
 
-from client.session import DeGiroSession
-from data_getters.nl_base.table_export import DeGiroDataGetterNL
-from data_schemas.schemas import PORTFOLIO_RESULTS_SCHEMA_NL
+from ..client.session import DeGiroSession
+from ..data_getters.nl_base.table_export import DeGiroDataGetterNL
+from ..data_schemas.schemas import PORTFOLIO_RESULTS_SCHEMA_NL
 
 
 class DailyPortfolioResults(DeGiroDataGetterNL):

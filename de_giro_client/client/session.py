@@ -7,26 +7,23 @@ Uses a combination of packages:
 Selenium is mainly used to login to DeGiro and receive appropriate cookies.
 """
 
-from typing import Dict, Optional, Mapping
+from typing import Dict, Optional
 from time import sleep
 
-import pendulum
 import yaml
-from pendulum import Date
 from selenium.webdriver.firefox.service import Service
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import requests
-import pandas as pd
 
-from de_giro_client.client import DE_GIRO_WEB_TRADER_DOMAIN_URL
+from . import DE_GIRO_WEB_TRADER_DOMAIN_URL
 
 # FIXME: find better way to specify config path
-with open("./de_giro_client/configs/selenium_config.yaml") as f:
+with open("./de_giro_client/de_giro_client/configs/selenium_config.yaml") as f:
     SELENIUM_CONFIG = yaml.load(f, Loader=yaml.Loader)
 
 # FIXME: find better way to specify config path
-with open("./de_giro_client/configs/requests_config.yaml") as f:
+with open("./de_giro_client/de_giro_client/configs/requests_config.yaml") as f:
     REQUESTS_CONFIG = yaml.load(f, Loader=yaml.Loader)
 
 

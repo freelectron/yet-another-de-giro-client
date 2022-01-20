@@ -5,10 +5,10 @@ import pandas as pd
 from pandera import DataFrameSchema
 from pendulum import Period
 
-from client import DE_GIRO_WEB_TRADER_DOMAIN_URL
-from client.session import DeGiroSession
-from translators import CASH_FUNDS_PRODUCT_NAME, PRODUCT_NAME_COLUMN_NAME
-from translators.nl_to_en.translator import DAILY_PORTFOLIO_RESULTS_DUTCH_TO_ENGLISH_COLUMNS
+from ...client import DE_GIRO_WEB_TRADER_DOMAIN_URL
+from ...client.session import DeGiroSession
+from ...translators import CASH_FUNDS_PRODUCT_NAME, PRODUCT_NAME_COLUMN_NAME
+from ...translators.nl_to_en.translator import DAILY_PORTFOLIO_RESULTS_DUTCH_TO_ENGLISH_COLUMNS
 
 
 class DeGiroDataGetterNL(ABC):
