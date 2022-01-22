@@ -5,10 +5,13 @@ Uses a combination of packages:
  - Uses request (https://docs.python-requests.org/en/master/index.html)
  - Uses pandas
 Selenium is mainly used to login to DeGiro and receive appropriate cookies.
+FIXME: use pkg_resources library to access config files
 """
 
 from typing import Dict, Optional
 from time import sleep
+import os
+# import pkg_resources
 
 import yaml
 from selenium.webdriver.firefox.service import Service
@@ -18,12 +21,10 @@ import requests
 
 from . import DE_GIRO_WEB_TRADER_DOMAIN_URL
 
-# FIXME: find better way to specify config path
-with open("./de_giro_client/de_giro_client/configs/selenium_config.yaml") as f:
+with open(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "configs", "selenium_config.yaml"))) as f:
     SELENIUM_CONFIG = yaml.load(f, Loader=yaml.Loader)
 
-# FIXME: find better way to specify config path
-with open("./de_giro_client/de_giro_client/configs/requests_config.yaml") as f:
+with open(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "configs", "requests_config.yaml"))) as f:
     REQUESTS_CONFIG = yaml.load(f, Loader=yaml.Loader)
 
 

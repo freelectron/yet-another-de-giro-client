@@ -6,7 +6,7 @@ import pandas as pd
 from pendulum import Period, Date
 
 from ..client.session import DeGiroSession
-from ..data_getters.nl_base.table_export import DeGiroDataGetterNL
+from ..data_getters.base_classes.table_export import DeGiroDataGetterNL
 from ..data_schemas.schemas import PORTFOLIO_RESULTS_SCHEMA_NL
 
 

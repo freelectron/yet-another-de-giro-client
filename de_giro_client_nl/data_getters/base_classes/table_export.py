@@ -13,7 +13,7 @@ from ...translators.nl_to_en.translator import DAILY_PORTFOLIO_RESULTS_DUTCH_TO_
 
 class DeGiroDataGetterNL(ABC):
     """
-    A nl_base class to load data from DeGiro's web trader.
+    A base_classes class to load data from DeGiro's web trader.
     Describes the flow of retrieving tabular data from the online.
 
     Main functions:
